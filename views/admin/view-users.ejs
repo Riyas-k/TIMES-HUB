@@ -1,0 +1,43 @@
+<section class="main-wrap">
+  <div class="container">
+    <div class="row">
+      <table class="table" id="productsTable">
+        <thead>
+          <tr>
+            <th scope="col">NO</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone No</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(function(data,index){ %>
+          <tr>
+            <th scope="row"><%=index+1%></th>
+            <td><%=data.Name%></td>
+            <td><%=data.Email%></td>
+            <td><%=data.PhoneNo%></td>
+            <td>
+              <% if(data.blocked==false) {%>
+              <a
+                href="/admin/block-user/<%=data._id%>"
+                class="btn btn-danger"
+                onclick="return confirm('Are your Sure want to block <%=data.Name%>')"
+                >BLOCK</a
+              >
+              <% }else { %>
+              <a
+                href="/admin/unblock-user/<%=data._id%>"
+                class="btn btn-primary"
+                >UNBLOCK</a
+              >
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

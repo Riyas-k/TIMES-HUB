@@ -1,0 +1,52 @@
+<section class="main-wrap mt-5">
+  <div class="container">
+    <a href="/admin/add-product">
+      <button class="btn btn-primary mb-2">Add Products</button>
+    </a>
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table" id="productsTable">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Name</th>
+              <th scope="col">Image</th>
+              <th scope="col">Price</th>
+              <th scope="col">OfferPrice</th>
+              <th scope="col">Category</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(data,index){ %>
+              <tr>
+                <th scope="row"><%=index+1%></th>
+                <td ><a href="/admin/fullImage/<%=data._id%>" style="color: black;"><%=data.ProductName%></td></a>
+                <td><a href="/admin/fullImage/<%=data._id%>" ><img src="/images/<%=data.Image[0]%>" style=" height:50px; width: 60px;" alt=""></a></td>
+                <td><%=data.Price%></td>
+                <td><%=data.OfferPrice%></td>
+                <td><%=data.Category%></td>
+                <% if(data.Quantity===0){ %>
+                    <td class="text-danger">out of stock</td>
+                <% }else{ %>
+                  <td><%=data.Quantity%></td>
+                <% } %>
+                <td>
+                  <a href="/admin/edit-product/<%=data._id%>" class="btn btn-success mr-1 btn-sm">Edit</a>
+                  <a href="/admin/delete-product/<%=data._id%>" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Are you want to delete <%=data.ProductName%>');Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Item Added Successfully To Cart',
+                            showConfirmButton: false,
+                            timer: 2000
+                          })">Delete</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

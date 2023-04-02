@@ -1,0 +1,354 @@
+const session = require("express-session");
+const mongoose = require("mongoose");
+const { response } = require("../app");
+const cartHelpers = require("../helpers/cartHelpers");
+const orderHelpers = require("../helpers/orderHelper");
+const Razorpay = require("razorpay");
+const paypal = require("paypal-rest-sdk");
+const razorPayDetails = require("../otp/razorpay");
+const paypalDetails = require("../otp/paypal");
+const userHelpers = require("../helpers/userHelper");
+const couponHelper = require("../helpers/couponHelper");
+
+var instance = new Razorpay({
+  key_id: "razorPayDetails.id",
+  key_secret: "razorPayDetails.secret_key",
+});
+
+module.exports = {
+  placeOrder: async (req, res) => {
+    try {
+      user = req.session.user;
+      // user.id = user.id.toString()
+      let count = await cartHelpers.getCount(req.session.user.id);
+      let cartItems = await cartHelpers.listCart(req.session.user.id);
+      let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
+      // console.log(offerTotal, "==");
+      let Address = await orderHelpers.getAddress(req.session.user.id);
+      let wishListCount = await userHelpers.wishListLength(req.session.user.id);
+      if (cartItems.length != 0) {
+        res.render("user/order", {
+          offerTotal,
+          user,
+          count,
+          cartItems,
+          Address,
+          wishListCount,
+        });
+      } else {
+        res.redirect("/shop");
+      }
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  postPlaceOrder: async (req, res) => {
+    try {
+      let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
+      
+      await orderHelpers
+        .placeOrder(req.body, offerTotal)
+        .then(async (response) => {
+          if (req.body["payment-method"] === "COD") {
+            res.json({ codStatus: true });
+          } else if (req.body["payment-method"] === "online") {
+            orderHelpers
+              .generateRazorPay(req.session.user.id, offerTotal)
+              .then((response) => {
+                res.json(response);
+              });
+          }
+        });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  getSuccess: async (req, res) => {
+    try {
+      let count = await cartHelpers.getCount(req.session.user.id);
+      let wishListCount = await userHelpers.wishListLength(req.session.user.id);
+      let user = req.session.user;
+
+      res.render("user/success", { user, count, wishListCount });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  getOrders: async (req, res) => {
+    try {
+      let count = await cartHelpers.getCount(req.session.user.id);
+      let user = req.session.user;
+      let orders = await orderHelpers.getOrders(req.session.user.id);
+      orders.map((order) => {
+        order.orders.createdAt = order.orders.createdAt.toLocaleString(
+          "en-US",
+          {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          }
+        );
+      });
+      let wishListCount = await userHelpers.wishListLength(req.session.user.id);
+
+      res.render("user/view-orders", { count, user, orders, wishListCount });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  addNewAddress: async (req, res) => {
+    try {
+      let count = await cartHelpers.getCount(req.session.user.id);
+      let user = req.session.user;
+      let wishListCount = await userHelpers.wishListLength(req.session.user.id);
+      res.render("user/addNewAddress", { count, user, wishListCount });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  cancelOrder: async (req, res) => {
+    try {
+      // console.log(req.params.id,'=------');
+      await orderHelpers
+        .cancelOrder(req.params.id, req.session.user.id)
+        .then((result) => {
+          res.json({ status: true });
+        });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  viewOrders: async (req, res) => {
+    try {
+      await orderHelpers.viewOrders().then((orders) => {
+        orders.map((order) => {
+          order.orders.createdAt = order.orders.createdAt.toLocaleString(
+            "en-US",
+            {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            }
+          );
+        });
+        let admins = req.session.admin;
+
+        res.render("admin/view-orders", {
+          orders,
+          layout: "adminLayout",
+          admins,
+        });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  postAddress: async (req, res) => {
+    try {
+      await orderHelpers.postAddress(req.body, req.session.user.id).then(() => {
+        res.redirect("/placeOrder");
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  deleteOrder: async (req, res) => {
+    try {
+      await orderHelpers.deleteOrder(req.params.id).then((response) => {
+        res.json({ status: true });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  deleteAddress: async (req, res) => {
+    try {
+      await orderHelpers.deleteAddress(req.params.id).then((response) => {
+        res.json({ status: true });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  orderDetails: async (req, res) => {
+    try {
+      await orderHelpers.orderDetails(req.params.id).then(async (response) => {
+        // console.log(response,'response==>>');
+        let count = await cartHelpers.getCount(req.session.user.id);
+        await orderHelpers.viewOrders().then(async (orders) => {
+          orders.map((order) => {
+            order.orders.createdAt = order.orders.createdAt.toLocaleString(
+              "en-US",
+              {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }
+            );
+          });
+          let user = req.session.user;
+          let products = response.productDetails[0];
+          let address = response.address1;
+          let orderDetails = response.details;
+          let wishListCount = await userHelpers.wishListLength(
+            req.session.user.id
+          );
+          let data = await orderHelpers.createData(response);
+          res.render("user/orderDetails", {
+            products,
+            address,
+            orderDetails,
+            user,
+            count,
+            orders,
+            wishListCount,
+            data,
+          });
+        });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  adminOrderDetails: async (req, res) => {
+    try {
+      await orderHelpers.orderDetails(req.params.id).then(async (response) => {
+        await orderHelpers.viewOrders().then((orders) => {
+          orders.map((order) => {
+            order.orders.createdAt = order.orders.createdAt.toLocaleString(
+              "en-US",
+              {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }
+            );
+          });
+          let products = response.productDetails[0];
+          let address = response.address1;
+          let orderDetails = response.details;
+          let admins = req.session.admin;
+          //   console.log(orders);
+          res.render("admin/order-details", {
+            layout: "adminLayout",
+            admins,
+            products,
+            address,
+            orders,
+            orderDetails,
+          });
+        });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  changeOrderStatus: (req, res) => {
+    try {
+      orderHelpers
+        .changeOrderStatus(req.body.status, req.params.id)
+        .then((response) => {
+          res.json({ status: true });
+        });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  verifyPaymentRazorPay: (req, res) => {
+    try {
+      console.log(req.body, "body");
+      orderHelpers
+        .verifyPaymentRazorPay(req.body)
+        .then(async () => {
+          console.log(req.body["order[receipt]"], "//");
+          await orderHelpers
+            .changeOnlineStatus(req.body["order[receipt]"])
+            .then((response) => {
+              console.log("razorpay successfull");
+              res.json({ status: true });
+            });
+        })
+        .catch((err) => {
+          res.json({ status: false });
+        });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  returnOrder: (req, res) => {
+    // console.log(req.params.id,'id');
+    try {
+      orderHelpers
+        .returnOrder(req.params.id, req.session.user.id)
+        .then((response) => {
+          res.json({ status: true });
+        });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  getSales: async (req, res) => {
+    try {
+      let admins = req.session.admin;
+      await orderHelpers.findTotal().then(async (total) => {
+        await orderHelpers.salesDetails().then((Details) => {
+          Details.map((Detail) => {
+            Detail.orders.createdAt = Detail.orders.createdAt.toLocaleString(
+              "en-US",
+              {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }
+            );
+          });
+          let shipping = Details.map((detail) => detail.orders);
+          let productDetails = shipping.map((data) => data.productDetails);
+          let Details1 = productDetails.map((datas) => datas[0]);
+          //   console.log(Details,';;');
+          res.render("admin/sales", {
+            layout: "adminLayout",
+            admins,
+            total,
+            Details,
+            shipping,
+            Details1,
+          }).productDetails;
+        });
+      });
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  postSales: (req, res) => {
+    try {
+      //need
+      orderHelpers.postSales(req.body);
+    } catch (error) {
+      res.status(500);
+    }
+  },
+  validateCoupon:async(req,res)=>{
+    try {
+      // console.log(req.query.coupon);
+      let total = await cartHelpers.getOfferTotal(req.session.user.id)
+       couponHelper.validateCoupon(req.query.coupon,req.session.user.id,total).then((response)=>{
+         res.json(response)
+       })
+      // couponHelper.validateCoupon()
+      
+    } catch (error) {
+      res.status(500)
+    }
+  }
+};

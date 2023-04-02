@@ -1,0 +1,116 @@
+<section class="main-wrap">
+  <div class="col-12 ml-2">
+    <div class="card mt-2">
+      <div class="card-header pb-0">
+        <h3 class="text-center">Coupon Management</h3>
+      </div>
+      <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+          <% if(coupon.length==0){%>
+          <div class="d-flex justify-content-center">
+            <img src="/assets/imgs/banners/empty-cart-1546860808" alt="" />
+          </div>
+          <%} else{%>
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th
+                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  No
+                </th>
+                <th
+                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  Coupon Code
+                </th>
+                <th
+                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  Discount Percent
+                </th>
+                <th
+                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  Max Discount
+                </th>
+                <th
+                  class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  Expiry
+                </th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% coupon.forEach((element,index)=>{ %>
+              <tr>
+                <td
+                  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                >
+                  <%= index+1 %>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm"><%= element.couponName %></h6>
+                      <p class="text-xs text-secondary mb-0">
+                        <%= element.description?.slice(0,40)+'...' %>
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h6 class="mb-0 text-sm">
+                    <%= element.discountPercentage%> %
+                  </h6>
+                </td>
+                <td>
+                  <h6 class="mb-0 text-sm">₹ <%= element.maxDiscountValue%></h6>
+                </td>
+                <td>
+                  <p class="text-xs font-weight-bold mb-0">
+                    <%=coupon.expiry%>
+                  </p>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  <div class="ms-auto text-end">
+                    <a
+                      class="btn btn-primary text-gradient px-3 mb-0"
+                      href="javascript:;"
+                      onclick="deleteCoupon('<%= element._id%>');Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Coupon Deleted Successfully from Coupon Collection',
+                        showConfirmButton: false,
+                        timer: 2000
+                      })"
+                      ><i class="far fa-trash-alt me-2"></i
+                    ></a>
+                  </div>
+                </td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function deleteCoupon(couponId) {
+    $.ajax({
+      url: "/admin/delete-coupon",
+      data: { couponId },
+      method: "delete",
+      success: (response) => {
+        if (response.status) {
+          location.reload();
+        }
+      },
+    });
+  }
+</script>
