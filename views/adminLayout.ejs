@@ -41,7 +41,67 @@
   <body>
     <%if(locals.admins){%> <%-include('partials/admin-sidebar')%> <%}%>
 
-
+<!-- 
+    <aside class="navbar-aside" id="offcanvas_aside">
+      <div class="aside-top">
+        <a href="index.html" class="brand-wrap">
+          <img src="https://images.cooltext.com/5651103.png" class="ml-30" alt=""></a>
+        </a>
+        <div>
+          <button class="btn btn-icon btn-aside-minimize">
+            <i class="text-muted material-icons md-menu_open"></i>
+          </button>
+        </div>
+      </div>
+      <nav>
+        <ul class="menu-aside">
+          <li class="menu-item active">
+            <a class="menu-link" href="index.html">
+              <i class="icon material-icons md-home"></i>
+              <span class="text">Dashboard</span>
+            </a>
+          </li>
+          <li class="menu-item has-submenu">
+            <a class="menu-link" href="page-products-list.html">
+              <i class="icon material-icons md-shopping_bag"></i>
+              <span class="text">Products</span>
+            </a>
+          
+          </li>
+          <li class="menu-item has-submenu">
+            <a class="menu-link" href="page-orders-1.html">
+              <i class="icon material-icons md-shopping_cart"></i>
+              <span class="text">Users</span>
+            </a>
+          
+          </li>
+          <li class="menu-item has-submenu">
+            <a class="menu-link" href="page-orders-1.html">
+              <i class="icon material-icons md-shopping_cart"></i>
+              <span class="text">Orders</span>
+            </a>
+      </li> 
+        </ul>
+        <hr />
+        <ul class="menu-aside">
+          <li class="menu-item has-submenu">
+            <a class="menu-link" href="#">
+              <i class="icon material-icons md-settings"></i>
+              <span class="text">Settings</span>
+            </a>
+           
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="page-blank.html">
+              <i class="icon material-icons md-local_offer"></i>
+              <span class="text"> Starter page </span>
+            </a>
+          </li>
+        </ul>
+        <br />
+        <br />
+      </nav>
+    </aside> -->
       <%if(locals.admins){%> <%-include('partials/admin-header')%> <%}%>
       <%-body%>
  
@@ -80,7 +140,8 @@
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script defer src="https://cdn.crop.guide/loader/l.js?c=FJRCJS"></script>
+<!-- <script defer src="https://cdn.crop.guide/loader/l.js?c=FJRCJS"></script> -->
+<script defer src="https://cdn.crop.guide/loader/l.js?c=QXSRGF"></script>
 <script>
   $(document).ready(function () {
     $.fn.dataTable.ext.errMode = 'throw';
@@ -88,3 +149,5 @@
   });
 </script>
 </html>
+
+  

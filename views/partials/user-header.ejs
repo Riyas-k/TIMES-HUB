@@ -80,10 +80,17 @@
         </div>
         <div class="header-right">
           <div class="search-style-2">
+            <% if(locals.search){ %>
             <form action="/search" method="post">
-              <input type="text" name="search" placeholder="Search for Watches..." />
-              <button type="submit" hidden>Search</button>
-            </form>
+                <input type="text" name="search" placeholder="Search for Watches..." />
+                <button type="submit" hidden>Search</button>
+
+               <%}else{%>
+                <input type="text" name="search" hidden placeholder="Search for Watches..." />
+                <button type="submit" hidden>Search</button>
+                
+              </form>
+              <% }%>
           </div>
           <div class="header-action-right">
             <div class="header-action-2">

@@ -169,8 +169,7 @@ function razorPayPayment(order){
     "name": "Times Hub", //your business name
     "description": "Test Transaction",
     "image": "/imgs/theme/404.png",
-    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1,
     "handler": function (response){
      verifyPayment(response,order)
   },
@@ -185,10 +184,11 @@ function razorPayPayment(order){
     "theme": {
         "color": "#3399cc"
     }
-};
-var rzp1 = new Razorpay(options);
+  }
+    var rzp1 = new Razorpay(options);
 rzp1.open()
-}
+};
+
 
 function verifyPayment(payment,order){
 

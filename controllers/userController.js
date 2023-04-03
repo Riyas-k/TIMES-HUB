@@ -26,7 +26,7 @@ module.exports = {
           let count = await cartHelpers.getCount(req.session.user.id);
           let pages = Math.ceil(doCount / perPage);
           let user = req.session.user;
-          res.render("user/user", { user, data, pages, count, wishListCount });
+          res.render("user/user", { user, data, pages, count, wishListCount,'search':true });
         });
       } else {
         res.redirect("/login");
@@ -56,7 +56,7 @@ module.exports = {
             pages,
             count,
             category,
-            wishListCount,
+            wishListCount,'search':true
           });
         } else {
           res.redirect("/login");

@@ -283,7 +283,7 @@ module.exports = {
       let category = await productHelpers.getCategory();
       let wishListCount = await userHelpers.wishListLength(req.session.user.id);
       productHelpers.sortProducts(req.body.selectedValue).then((data) => {
-        res.render("user/sort", { user, data, category, count, wishListCount });
+        res.render("user/sort", { user, data, category, count, wishListCount,'search':true });
       });
     } catch (error) {
       res.status(500);
@@ -301,7 +301,7 @@ module.exports = {
           user,
           category,
           wishListCount,
-          count,
+          count, 
         });
       });
     } catch (error) {
