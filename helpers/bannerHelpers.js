@@ -53,11 +53,11 @@ module.exports = {
     }
   },
   postEditBanner: (bannerId, bodyData, file) => {
-    console.log(bannerId);
+    // console.log(bannerId);
     try {
       return new Promise(async (resolve, reject) => {
         let banners = await db.banner.findOne({ _id: bannerId });
-        console.log(banners);
+        // console.log(banners);
         await db.banner
           .updateOne(
             { _id: bannerId },

@@ -7,9 +7,21 @@
          <%}else{%>
             <h1 class="text-dark text-center p-5">Sales Report</h1>
          <div class="d-flex justify-content-center m-4">
-             <button type="button" class="btn btn-danger btn_print me-3"
+             <button type="button" class="btn btn-danger btn_print me-3" onclick="Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Download PDF Successfully',
+              showConfirmButton: false,
+              timer: 1500
+            })"
                  value="Download as Pdf">Download PDF</button>
-             <button type="button" class="btn btn-danger btn_print me-3" 
+             <button type="button" class="btn btn-danger btn_print me-3"  onclick="Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Download Excel Successfully',
+              showConfirmButton: false,
+              timer: 1500
+            })"
                  value="Export to excel">Download as Excel</button>
         
          <div>

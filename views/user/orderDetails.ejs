@@ -12,7 +12,13 @@
               <p style="display: none"; id="me"><%= JSON.stringify(locals.data) %></p>
               <%if(orderDetails.orderStatus == 'Delivered'){%>
             
-                <button  class=" mt-15 btn btn-suucess" onclick="invoiceCreator()">Download invoice</button>
+                <button  class=" mt-15 btn btn-suucess" onclick="invoiceCreator();Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Download Successfully',
+                  showConfirmButton: false,
+                  timer: 1500
+                })">Download invoice</button>
               <%}%>
           </div>
           <div class="card-body p-4">
@@ -74,7 +80,13 @@
                <button  class="btn btn-primary text-center"  onclick="cancelOrder('<%=orderDetails._id%>')">Cancel Order</button>
               <%} %>
               <%if(orderDetails.orderStatus=='Delivered'){ %>   
-             <button class="" style="background: slateblue; height:2rem" onclick="returnOrder('<%=orderDetails._id%>')">Return</button>
+             <button class="" style="background: slateblue; height:2rem" onclick="returnOrder('<%=orderDetails._id%>');Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Return Successfully',
+              showConfirmButton: false,
+              timer: 1500
+            })">Return</button>
               <%} %>
                   </div>
               <div class="d-flex justify-content-between pt-2">

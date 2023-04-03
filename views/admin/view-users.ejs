@@ -29,7 +29,13 @@
               <% }else { %>
               <a
                 href="/admin/unblock-user/<%=data._id%>"
-                class="btn btn-primary"
+                class="btn btn-primary" onclick="Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Unblocked',
+                  showConfirmButton: false,
+                  timer: 1500
+                })"
                 >UNBLOCK</a
               >
               <% } %>

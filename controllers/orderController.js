@@ -1,6 +1,6 @@
 const session = require("express-session");
 const mongoose = require("mongoose");
-const { response } = require("../app");
+const { response, off } = require("../app");
 const cartHelpers = require("../helpers/cartHelpers");
 const orderHelpers = require("../helpers/orderHelper");
 const Razorpay = require("razorpay");
@@ -9,6 +9,7 @@ const razorPayDetails = require("../otp/razorpay");
 const paypalDetails = require("../otp/paypal");
 const userHelpers = require("../helpers/userHelper");
 const couponHelper = require("../helpers/couponHelper");
+const { orders } = require("@paypal/checkout-server-sdk");
 
 var instance = new Razorpay({
   key_id: "razorPayDetails.id",
@@ -23,9 +24,19 @@ module.exports = {
       let count = await cartHelpers.getCount(req.session.user.id);
       let cartItems = await cartHelpers.listCart(req.session.user.id);
       let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
+      let wallet = await userHelpers.getWalletAmount(req.session.user.id)
+      // console.log('riaaz');
       // console.log(offerTotal, "==");
       let Address = await orderHelpers.getAddress(req.session.user.id);
       let wishListCount = await userHelpers.wishListLength(req.session.user.id);
+      console.log(offerTotal,
+        user,
+        count,
+        cartItems,
+        Address,
+        wishListCount,
+        wallet
+        );
       if (cartItems.length != 0) {
         res.render("user/order", {
           offerTotal,
@@ -34,6 +45,7 @@ module.exports = {
           cartItems,
           Address,
           wishListCount,
+          wallet
         });
       } else {
         res.redirect("/shop");
@@ -43,12 +55,13 @@ module.exports = {
     }
   },
   postPlaceOrder: async (req, res) => {
+    // console.log(req.body["payment-method"],'[]]]]]]');
     try {
       let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
-      
       await orderHelpers
         .placeOrder(req.body, offerTotal)
         .then(async (response) => {
+          // console.log(response,'lllllllllllll');
           if (req.body["payment-method"] === "COD") {
             res.json({ codStatus: true });
           } else if (req.body["payment-method"] === "online") {
@@ -57,6 +70,15 @@ module.exports = {
               .then((response) => {
                 res.json(response);
               });
+          }
+          else if(req.body['payment-method']==='Wallet'){
+          
+            await  orderHelpers.updateWallet(req.session.user.id,offerTotal).then((response)=>{
+              if(response){
+                console.log(response,'jjjj');
+                res.json({wallet:true})
+              }
+            })
           }
         });
     } catch (error) {
@@ -111,9 +133,14 @@ module.exports = {
   cancelOrder: async (req, res) => {
     try {
       // console.log(req.params.id,'=------');
+      let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
+     await  orderHelpers.cancelWalletIncrease(req.session.user.id,offerTotal)
       await orderHelpers
         .cancelOrder(req.params.id, req.session.user.id)
         .then((result) => {
+          if(result){
+            res.json({ status: true });
+          }
           res.json({ status: true });
         });
     } catch (error) {
@@ -254,8 +281,19 @@ module.exports = {
   changeOrderStatus: (req, res) => {
     try {
       orderHelpers
-        .changeOrderStatus(req.body.status, req.params.id)
+        .changeOrderStatus(req.body.status, req.params.id,req.session.user.id)
         .then((response) => {
+          console.log(response,'resp');
+          const orders = [];
+          for (let i = 0; i <response?.orders.length; i++) {
+            if (response.orders[i].orderStatus === "Return Confirmed") {
+              orders.push(response.orders[i].orderStatus);
+            }
+          }
+        if(orders){
+           orderHelpers.getWallet(req.session.user.id)
+        }
+
           res.json({ status: true });
         });
     } catch (error) {
@@ -283,9 +321,10 @@ module.exports = {
       res.status(500);
     }
   },
-  returnOrder: (req, res) => {
+  returnOrder:async (req, res) => {
     // console.log(req.params.id,'id');
     try {
+    
       orderHelpers
         .returnOrder(req.params.id, req.session.user.id)
         .then((response) => {
@@ -345,8 +384,6 @@ module.exports = {
        couponHelper.validateCoupon(req.query.coupon,req.session.user.id,total).then((response)=>{
          res.json(response)
        })
-      // couponHelper.validateCoupon()
-      
     } catch (error) {
       res.status(500)
     }

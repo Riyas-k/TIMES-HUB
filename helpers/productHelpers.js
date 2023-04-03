@@ -249,7 +249,7 @@ module.exports = {
             },
           ])
           .then((data) => {
-            // console.log(data, "cod");
+            console.log(data, "cod");
             resolve(data);
           });
       });
@@ -325,4 +325,38 @@ module.exports = {
       console.log(error);
     }
   },
-};
+  walletOrders:()=>{
+   try {
+    return new Promise(async(resolve,reject)=>{
+      await db.order.aggregate([
+       {
+         $unwind:'$orders'
+       },
+       {
+        $match:{
+          'orders.orderStatus':{
+            $in:['Placed','Delivered']
+          }
+        }
+       },
+      
+       {
+        $match:{
+          'orders.paymentMethod':'Wallet'
+        }
+       }
+       ,
+       {
+        $count:'count'
+       }
+      ]).then((response)=>{
+       console.log(response,'klfgjgl');
+       resolve(response)
+      })
+   })
+ 
+   } catch (error) {
+    
+   }
+}
+}

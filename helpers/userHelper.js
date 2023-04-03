@@ -358,21 +358,14 @@ module.exports = {
       console.log(error);
     }
   },
-  getWallet:(userId)=>{
+ 
+  getWalletAmount:(userId)=>{
     try {
       return new Promise(async(resolve,reject)=>{
-          await db.order.aggregate([
-            {
-              $match:{
-                user:userId
-              }
-            },
-            {
-              $unwind:'$orders'
-            }
-          ]).then((response)=>{
-            console.log(response,';;;;;;;;;;;;;;;;;;order');
-          })
+        await db.users.findOne({_id:userId}).then((response)=>{
+          console.log(response);
+          resolve(response?.Wallet)
+        })
       })
       
     } catch (error) {

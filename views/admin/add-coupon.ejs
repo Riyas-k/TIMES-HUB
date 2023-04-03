@@ -70,7 +70,13 @@
                   </div>
                 </div>
       
-                <a type="button" class="btn btn-danger" onclick="validatorCoupen()">submit</a>
+                <a type="button" class="btn btn-danger" onclick="validatorCoupen();Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Coupon Added Successfully',
+                  showConfirmButton: false,
+                  timer: 1500
+                })">submit</a>
       
               </div>
           </div>

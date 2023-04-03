@@ -7,6 +7,7 @@ const Razorpay = require("razorpay");
 const razorPayDetails = require("../otp/razorpay");
 const { resolve } = require("path");
 const easyinvoice = require("easyinvoice");
+const { rejects } = require("assert");
 
 var instance = new Razorpay({
   key_id: razorPayDetails.id,
@@ -71,8 +72,10 @@ module.exports = {
             $unwind: "$Address",
           },
         ]);
+        console.log(bodyData["payment-method"]);
         let orderStatus =
-          bodyData["payment-method"] === "COD" ? "Placed" : "Pending";
+          bodyData["payment-method"] === "COD" || "Wallet" ? "Placed" : "Pending";
+          console.log(orderStatus,'status====');
         let status =
           bodyData["payment-method"] === "COD" ? "Success" : "Pending";
 
@@ -94,7 +97,8 @@ module.exports = {
                 $push: { orders: orderDetailsData },
               }
             )
-            .then((orders) => {
+            .then(async(orders) => {
+              await db.cart.deleteMany({ user: bodyData.user })
               resolve(orders);
             });
         } else {
@@ -102,14 +106,13 @@ module.exports = {
             user: bodyData.user,
             orders: orderDetailsData,
           });
-          await newOrder.save().then((orders) => {
+          await newOrder.save().then(async(orders) => {
+            await db.cart.deleteMany({ user: bodyData.user })
             resolve(orders);
             // console.log(details,'===============================///');
           });
         }
-        await db.cart.deleteMany({ user: bodyData.user }).then(() => {
-          resolve();
-        });
+      
         for (let i = 0; i < productDetails.length; i++) {
           const productId = productDetails[i]._id;
           const productQuantity = productDetails[i].quantity;
@@ -280,7 +283,7 @@ module.exports = {
   },
   deleteOrder: (orderId) => {
     try {
-      console.log(orderId, "====");
+      // console.log(orderId, "====");
       return new Promise(async (resolve, reject) => {
         await db.order
           .updateOne(
@@ -318,8 +321,8 @@ module.exports = {
           { "orders._id": orderId },
           { "orders.$": 1 }
         );
-        let details = productId.orders[0];
-        let order = productId.orders[0].productDetails;
+        let details = productId?.orders[0];
+        let order = productId?.orders[0]?.productDetails;
         let address1 = await db.order.aggregate([
           {
             $unwind: "$orders",
@@ -339,12 +342,52 @@ module.exports = {
           },
         ]);
 
-        let productDetails = productId.orders.map(
+        let productDetails = productId?.orders.map(
           (object) => object.productDetails
         );
-        let products = productId.orders.map((object) => object);
+        let products = productId?.orders.map((object) => object);
         resolve({ productDetails, address1, products, details });
       });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getWallet:(userId)=>{
+    try {
+      return new Promise(async(resolve,reject)=>{
+         let response =  await db.order.aggregate([
+            {
+              $match:{
+                user:userId
+              }
+            },
+            {
+              $unwind:'$orders'
+            },
+            {
+              $match:{
+                'orders.orderStatus':'Return Confirmed'
+              }
+            },
+            {
+              $project:{
+                'orders.total':1
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                total: { $sum: '$orders.total' }
+              }
+            }
+          ])
+
+          let data = response[0]?.total
+   
+            await db.users.updateOne({_id:userId},{$set:{Wallet:data}})
+          resolve(data)
+          
+        })
     } catch (error) {
       console.log(error);
     }
@@ -363,6 +406,7 @@ module.exports = {
       console.log(error);
     }
   },
+  
   generateRazorPay: (userId, offerTotal) => {
     try {
       return new Promise(async (resolve, reject) => {
@@ -380,7 +424,7 @@ module.exports = {
             },
           })
           .then((orders) => {
-            console.log(orders, "<<>>>");
+            // console.log(orders, "<<>>>");
             resolve(orders);
           })
           .catch((error) => {
@@ -443,7 +487,7 @@ module.exports = {
         { "orders._id": ObjectId(proId) },
         { $set: { "orders.$.orderStatus": "Return Pending" } }
       );
-      console.log(order);
+      // console.log(order);
       let productDetails = await db.order.aggregate([
         {
           $match: { user: userId },
@@ -581,6 +625,7 @@ module.exports = {
         customize: {},
         images: {
           logo: "https://images.cooltext.com/5651103.png",
+          'background':'https://myhappydeals.ae/wp-content/uploads/2019/03/Sansdo-New-men-and-women-leather-watch-steel-ring-retro-digital-pointer-dial-solid-color-high-quality-fashion-student-watch.jpg'
         },
         sender: {
           company: "Times Hub",
@@ -619,4 +664,37 @@ module.exports = {
       console.log(error);
     }
   },
-};
+  updateWallet:(userId,offerTotal)=>{
+    try {
+        return new Promise(async (resolve, reject) => {
+        const response = await db.users.updateOne(
+          { _id: userId },
+          { $inc: { Wallet: -offerTotal } },
+          { new: true }
+        );
+        console.log(response, "resp");
+        resolve(response);
+    
+      });
+    } catch (error) {
+      reject(error);
+      }
+    
+  },
+  cancelWalletIncrease:(userId,offerTotal)=>{
+   return new Promise(async(resolve,reject)=>{
+    try {
+      const response = await db.users.updateOne(
+        { _id: userId },
+        { $inc: { Wallet: offerTotal } },
+        { new: true }
+      )
+      console.log(response,'llllllfjgsdfkhku');
+      resolve()
+    } catch (error) {
+      console.log(error);
+    }
+   })
+ 
+}
+}

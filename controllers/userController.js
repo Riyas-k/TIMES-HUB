@@ -354,11 +354,12 @@ module.exports = {
       let user = req.session.user
       let count = await cartHelpers.getCount(req.session.user.id);
       let wishListCount = await userHelpers.wishListLength(req.session.user.id);
-      let wallet = await userHelpers.getWallet(req.session.user.id)
-      console.log(wallet.Wallet,'==');
-      res.render('user/wallet',{user,count,wishListCount,wallet})
+      let walletAmount = await userHelpers.getWalletAmount(req.session.user.id)
+      console.log(walletAmount,'wa;let');
+      res.render('user/wallet',{user,count,wishListCount,walletAmount})
       
     } catch (error) {
+      console.log(error);
       res.status(500);
     }
   }

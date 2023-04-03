@@ -30,7 +30,7 @@ module.exports = {
     try {
       return new Promise(async (resolve, reject) => {
         await db.order.find().then((response) => {
-          // console.log(response[0].orders.length,'///');
+          console.log(response[0].orders.length,'///');
           if (response == 0) {
             resolve(0);
           } else {

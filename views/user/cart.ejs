@@ -246,14 +246,13 @@ margin-top:100px;
 <% } %>
 
 <script>
-  function validateCoupon(event){
-    event.preventDefault();    
+  function validateCoupon(event){  
      couponName = document.getElementById('code').value;
      $.ajax({
        url:'/validate-coupon?coupon='+couponName,
        method:'post',
        success:(response)=>{
-        console.log(response);
+        // console.log(response);
          if(response.discountAmount && response.couponTotal){
            document.getElementById('discountAmount').innerHTML = "-" + (response?.discountAmount)
            document.getElementById('OffTotal').innerHTML = response?.couponTotal

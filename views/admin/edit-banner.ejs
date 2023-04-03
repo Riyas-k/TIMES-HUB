@@ -36,7 +36,13 @@
             style="width: 100px; height: auto"
           />
           <input type="file" name="image" class="form-control" />
-          <button type="submit" class="btn btn-success mt-4">Submit</button>
+          <button type="submit" class="btn btn-success mt-4" onclick="Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Changes Saved',
+            showConfirmButton: false,
+            timer: 1500
+          })">Submit</button>
         </form>
       </div>
     </div>

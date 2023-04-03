@@ -75,7 +75,13 @@
             class="form-control"
             required
           />
-          <button type="submit" class="btn btn-success mt-4">Submit</button>
+          <button type="submit" class="btn btn-success mt-4" onclick="Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Product Added',
+            showConfirmButton: false,
+            timer: 1500
+          })">Submit</button>
         </form>
       </div>
     </div>

@@ -31,7 +31,7 @@
                 style="background-color: rgb(102, 102, 102); color: white"
                 name="status"
               >
-               <% if(orderDetails.orderStatus!='Return confirmed'){%>
+               <% if(orderDetails.orderStatus!='Return Confirmed'){%>
 
                 <% if(orderDetails.orderStatus!='Return Pending'){ %>
                   
@@ -41,16 +41,29 @@
                 <option>Shipped</option>
                 <option>Delivered</option>
                 <% }else{ %>
-                <option value="Return Confirmed">Return confirmed</option>
+                <option value="Return Confirmed"> <a  onclick="Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Return Successfully',
+                  showConfirmButton: false,
+                  timer: 1500
+                })">Return confirmed </a> </option>
                 <% } %>
                <% } else{ %>
-                <option>Returned</option>
+                <option value="Return Confirmed">Return confirmed</option>
+                <!-- <p>Returned</p> -->
                <%}%>
 
               </select>
 
               <button
-                type="submit" onclick="changeOrderStatus('<%=orderDetails._id%>')"
+                type="submit" onclick="changeOrderStatus('<%=orderDetails._id%>');Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Order Status Changed to <%=orderDetails.orderStatus%>',
+                  showConfirmButton: false,
+                  timer: 2000
+                })"
                 class="btn btn-primary"
               >
                 Save

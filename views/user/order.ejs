@@ -61,6 +61,15 @@
               <input class="form-check-input" type="radio" name="payment-method" value="online" />
               <label class="form-check-label" for="flexRadioDefault1">Razorpay</label>
             </div>
+            <div class="form-check">
+                <% if(offerTotal<=wallet){ %>
+                <input class="form-check-input" type="radio" name="payment-method" value="Wallet" />
+                <label class="form-check-label" for="flexRadioDefault1">Wallet:<span>balance:₹<%=wallet%></span></label>
+                <%}else{ %>
+                  <label class="form-check-label" for="flexRadioDefault1">Wallet:<span> ₹<%=wallet%> </span><span class="text-danger
+                    "> Insufficient Balance</span></label>
+                  <% }%>
+                </div>
             <!-- <div class="form-check">
               <input class="form-check-input" type="radio" name="payment-method" value="paypal" />
               <label class="form-check-label" for="flexRadioDefault1">Paypal</label>
@@ -140,7 +149,10 @@
          success:(response)=>{
             if(response.codStatus){
              location.href='/success'
-            }else{
+            }else if(response.wallet){
+              location.href='/success'
+            }
+            else{
               razorPayPayment(response)
 
             }

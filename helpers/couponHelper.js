@@ -14,7 +14,7 @@ module.exports = {
           charset: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
           prefix: "TIMES-HUB-",
         });
-        console.log(couponCode[0], "kkk");
+        // console.log(couponCode[0], "kkk");
         resolve({ status: true, couponCode: couponCode[0] });
       } catch (error) {
         console.log(error);
@@ -64,10 +64,12 @@ module.exports = {
   },
   addCouponIntUserDb: (couponName, userId) => {
     try {
-      let objCart = {
-        couponStatus: true,
-        couponName: couponName,
-      };
+  
+        let objCart = {
+          couponStatus: true,
+          couponName: couponName,
+        };
+    
       return new Promise(async (resolve, reject) => {
         let response = await db.users.updateOne(
           { _id: objectId(userId) },
@@ -77,7 +79,7 @@ module.exports = {
             },
           }
         );
-        console.log(response, "res");
+        // console.log(response, "res");
         resolve(response);
       });
     } catch (error) {
@@ -104,7 +106,7 @@ module.exports = {
         let couponExist = await db.coupon.findOne({
           "coupon.couponName": couponCode,
         });
-        console.log(couponExist, ";;");
+        // console.log(couponExist, ";;");
         if (couponExist) {
           if (new Date(couponExist.expiry) - new Date() > 0) {
             let userCouponExist = await db.users.findOne({
@@ -112,7 +114,7 @@ module.exports = {
               "coupon.couponName": couponCode,
             });
             if (!userCouponExist) {
-              console.log("jii");
+              // console.log("jii");
               resolve({
                 discountAmount,
                 couponTotal,

@@ -51,7 +51,13 @@
           />
           <span id="image-error" class="validation-label"></span>
 
-          <button type="submit" class="btn btn-success mt-4">Submit</button>
+          <button type="submit" class="btn btn-success mt-4" onclick="Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Banner Added',
+            showConfirmButton: false,
+            timer: 1500
+          })">Submit</button>
         </form>
       </div>
     </div>

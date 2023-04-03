@@ -30,6 +30,7 @@ module.exports = {
       await cartHelpers.listCart(req.session.user.id).then((cartItems) => {
         let user = req.session.user;
         // console.log(cartItems,'=====cart');
+       
         res.render("user/cart", {
           cartItems,
           user,
@@ -77,13 +78,15 @@ module.exports = {
     }
   },
   postCoupon:async(req,res)=>{
-    console.log('klfkf');
     try {
-        console.log(req.body.coupon,req.session.user.id,'kk');
+        if(req.body.coupon.length>0){
         await couponHelper.addCouponIntUserDb(req.body.coupon,req.session.user.id).then((response)=>{
-          console.log(response,';;;;;;;;;;');
+          // console.log(response,';;;;;;;;;;');
           res.redirect('/placeOrder')
         })
+      }else{
+        res.redirect('/placeOrder')
+      }
     } catch (error) {
         res.status(500)
     }
