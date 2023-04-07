@@ -132,11 +132,11 @@ module.exports = {
   },
   cancelOrder: async (req, res) => {
     try {
-      // console.log(req.params.id,'=------');
-      let offerTotal = await cartHelpers.getOfferTotal(req.session.user.id);
+      console.log(req.params.id,'=------');
+      let offerTotal = await orderHelpers.getOrderTotal(req.params.id);
+      console.log(offerTotal,'kkkkk');
      await  orderHelpers.cancelWalletIncrease(req.session.user.id,offerTotal)
-      await orderHelpers
-        .cancelOrder(req.params.id, req.session.user.id)
+     await  orderHelpers.cancelOrder(req.params.id, req.session.user.id)
         .then((result) => {
           if(result){
             res.json({ status: true });

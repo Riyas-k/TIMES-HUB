@@ -29,12 +29,23 @@ module.exports = {
   ordersLength: () => {
     try {
       return new Promise(async (resolve, reject) => {
-        await db.order.find().then((response) => {
-          console.log(response[0].orders.length,'///');
+        await db.order.aggregate([
+          {
+            $unwind:'$orders'
+          },
+          {
+            $match:{
+              'orders.orderStatus':{
+                $in:['Placed','Delivered']
+              }
+            }
+          }
+        ]).then((response) => {
+          console.log(response.length,'///');
           if (response == 0) {
             resolve(0);
           } else {
-            resolve(response[0]?.orders.length);
+            resolve(response.length);
           }
         });
       });

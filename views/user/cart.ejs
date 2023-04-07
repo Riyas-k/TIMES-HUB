@@ -119,7 +119,7 @@ margin-top:100px;
                   </td>
                   
                   <td class="text-center" data-title="Stock">
-                    <button class="ml-5 btn btn-sm" style="width: 40px; height: 40px"
+                    <button class="ml-5 btn btn-sm bg-dark" style="width: 40px; height: 40px"
                       onclick="(changeQuantity('<%=cart._id%>','<%=cart.item%>','<%=user.id%>',-1))">
                       -
                     </button>
@@ -128,7 +128,7 @@ margin-top:100px;
                       <%=cart.quantity%>
                     </span>
                     <% if(cart.carted.Quantity>cart.quantity){ %>
-                    <button class="mr-5 btn btn-sm" style="width: 40px; height: 40px"
+                    <button class="mr-5 btn btn-sm bg-dark" style="width: 40px; height: 40px"
                     onclick="changeQuantity('<%=cart._id%>','<%=cart.item%>','<%=user.id%>',1)">
                     +
                   </button>
@@ -143,7 +143,7 @@ margin-top:100px;
                 </td>
                 
                   <td class="action" data-title="Remove">
-                    <button onclick="removeProduct('<%=cart.item%>','<%=user.id%>','<%=cart.carted.ProductName%>')" ; class="btn btn-danger btn-sm">
+                    <button onclick="removeProduct('<%=cart.item%>','<%=user.id%>','<%=cart.carted.ProductName%>')" ; class="btn btn-danger  bg-dark btn-sm">
                       <i class="fa-regular fa-trash-can"></i>
                     </button>
                   </td>
@@ -172,7 +172,7 @@ margin-top:100px;
                                     <input id="code" class="font-medium" name="Coupon" placeholder="Enter Your Coupon">
                                 </div>
                                 <div class="form-group col-lg-3">
-                                  <button type="button" class="btn  btn-sm"
+                                  <button type="button" class="btn  btn-sm bg-dark"
                                   onclick="validateCoupon()"><i
                                       class="fi-rs-label mr-10"></i>Apply</button>
       
@@ -210,7 +210,7 @@ margin-top:100px;
                       <!-- </tr> -->
                       <td class="cartItems_total_amount">
                         <strong
-                          >₹<span id="OffTotal" class="font-xl fw-900 text-brand"><%=offerTotal%></span
+                          >₹<span id="OffTotal" class="font-xl fw-900 text-brand "><%=offerTotal%></span
                           ></strong
                         >
                       </td>
@@ -225,7 +225,7 @@ margin-top:100px;
                     <input type="hidden" name="coupon" id="couponName" value="">
                     <input type="hidden" name="discountAmount" id="couponDiscountAmount" value="">
                     <% if(locals.cartItems[0].carted.Quantity>0){ %>
-                      <button type="submit" class="btn"><i class="fi-rs-box-alt mr-10"></i> Place Order</button>
+                      <button type="submit" class="btn bg-dark"><i class="fi-rs-box-alt mr-10"></i> Place Order</button>
                        
                     <% }else{%>
                       <p class="text-danger">out-of-stock</p>

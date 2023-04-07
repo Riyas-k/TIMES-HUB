@@ -224,7 +224,7 @@ module.exports = {
       console.log(error);
     }
   },
-  codLength: () => {
+    codLength: () => {
     try {
       return new Promise(async (resolve, reject) => {
         await db.order

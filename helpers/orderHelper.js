@@ -696,5 +696,18 @@ module.exports = {
     }
    })
  
+},
+getOrderTotal:(orderId)=>{
+  return new Promise(async(resolve,reject)=>{
+    try {
+      await db.order.findOne({'orders._id':ObjectId(orderId)},{'orders.$':1}).then((response)=>{
+        // console.log(response.orders[0].total,'kkk');
+        resolve(response?.orders[0].total)
+      })
+      
+    } catch (error) {
+      console.log(error);
+    }
+  })
 }
 }

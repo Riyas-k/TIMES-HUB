@@ -62,17 +62,17 @@ module.exports = {
           // console.log(userGrowth, "users==");
           userGrowth.forEach((user) => {
             const userDay = user.createdAt.toLocaleDateString("en-US", {
-              weekday: "long",
+              month: "long",
             });
             usersPerDay[userDay] = (usersPerDay[userDay] || 0) + 1;
           });
   
           response.forEach((order) => {
             const day = order.orders.createdAt.toLocaleDateString("en-US", {
-              weekday: "long",
+              month: "long",
             });
             ordersPerDay[day] = (ordersPerDay[day] || 0) + 1;
-            // console.log(ordersPerDay,'kk');
+            console.log(ordersPerDay,'kk');
           });
   
           let codLength = await productHelpers.codLength();

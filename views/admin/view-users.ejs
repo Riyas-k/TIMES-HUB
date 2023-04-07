@@ -4,7 +4,7 @@
       <table class="table" id="productsTable">
         <thead>
           <tr>
-            <th scope="col">NO</th>
+            <th class="d-none d-sm-table-cell" scope="col">NO</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone No</th>
@@ -14,7 +14,7 @@
         <tbody>
           <% data.forEach(function(data,index){ %>
           <tr>
-            <th scope="row"><%=index+1%></th>
+            <th class="d-none d-sm-table-cell" scope="row"><%=index+1%></th>
             <td><%=data.Name%></td>
             <td><%=data.Email%></td>
             <td><%=data.PhoneNo%></td>

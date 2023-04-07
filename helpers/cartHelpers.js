@@ -200,7 +200,7 @@ module.exports = {
             },
           ])
           .then((total) => {
-            // console.log(total,"'''''''''''''''''''");
+            console.log(total,"'''''''''''''''''''");
             resolve(total[0]?.total);
           });
       });

@@ -12,7 +12,7 @@
               <p style="display: none"; id="me"><%= JSON.stringify(locals.data) %></p>
               <%if(orderDetails.orderStatus == 'Delivered'){%>
             
-                <button  class=" mt-15 btn btn-suucess" onclick="invoiceCreator();Swal.fire({
+                <button  class=" mt-15 btn btn-suucess bg-dark" onclick="invoiceCreator();Swal.fire({
                   position: 'center',
                   icon: 'success',
                   title: 'Download Successfully',
@@ -77,10 +77,10 @@
                                                                             
               <%} %>
               <%if(orderDetails.orderStatus=='Placed'){ %>   
-               <button  class="btn btn-primary text-center"  onclick="cancelOrder('<%=orderDetails._id%>')">Cancel Order</button>
+               <button  class="btn btn-primary text-center bg-dark"  onclick="cancelOrder('<%=orderDetails._id%>')">Cancel Order</button>
               <%} %>
               <%if(orderDetails.orderStatus=='Delivered'){ %>   
-             <button class="" style="background: slateblue; height:2rem" onclick="returnOrder('<%=orderDetails._id%>');Swal.fire({
+             <button class="text-light" style="background: rgb(0, 0, 0); height:2rem;" onclick="returnOrder('<%=orderDetails._id%>');Swal.fire({
               position: 'center',
               icon: 'success',
               title: 'Return Successfully',

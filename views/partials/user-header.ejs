@@ -1,9 +1,9 @@
-<header class="header-area header-style-3 header-height-2">
-  <div class="header-top header-top-ptb-1 d-none d-lg-block">
-    <div class="container">
+<header class="header-area header-style-3 header-height-2" >
+  <div class="header-top header-top-ptb-1 d-none d-lg-block" style="background-color: white;">
+    <div class="container" >
       <div class="row align-items-center">
         <div class="col-xl-3 col-lg-4">
-          <div class="header-info">
+          <div class="header-info" >
             <ul>
               <li>
                 <!-- <i class="fi-rs-smartphone"></i>
@@ -16,8 +16,8 @@
             </ul>
           </div>
         </div>
-        <div class="col-xl-6 col-lg-4">
-          <div class="text-center">
+        <div class="col-xl-6 col-lg-4 ">
+          <div class="text-center text-dark">
             <div id="news-flash" class="d-inline-block">
               <ul>
                 <li>
@@ -37,14 +37,14 @@
           <div class="header-info header-info-right">
             <ul>
               <li>
-                <a class="language-dropdown-active" href="#">
+                <a class="language-dropdown-active text-dark" href="#">
                   <i class="fi-rs-world"></i> English
                   <!-- <i class="fi-rs-angle-small-down"></i -->
                 </a>
               
               </li>
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle"  style="background-color:  #088178;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle"  style="background-color:  #000000;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <% if ( locals.user) { %>
               <i class="fa-solid fa-user"></i>
               <%=user.userName %>
@@ -102,7 +102,7 @@
                     src="assets/imgs/theme/icons/icon-heart.svg"
                   />
                   <% if(locals.user) { %>
-                  <span class="pro-count blue" id="wishListCount"><%=locals.wishListCount%></span>
+                  <span class="pro-count blue bg-dark" id="wishListCount"><%=locals.wishListCount%></span>
                   <%} %>
                 </a>
               </div>
@@ -113,7 +113,7 @@
                     src="assets/imgs/theme/icons/icon-cart.svg"
                   />
                   <% if(locals.user) { %>
-                    <span class="pro-count blue" id="cartCount"><%=locals.count%></span>
+                    <span class="pro-count blue bg-dark" id="cartCount"><%=locals.count%></span>
                    <%} %>
                 </a>
                 <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2">
@@ -178,7 +178,7 @@
         <div class="logo logo-width-1 d-block d-lg-none">
           <!-- <h4>TIMES HUB</h4> -->
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle"  style="background-color:  #088178;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle"  style="background-color:  #000000;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <% if ( locals.user) { %>
                 <%=user.userName %>
                 <%} else { %>
@@ -231,7 +231,7 @@
               <a href="/wish-list">
                 <img alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg" />
                 <% if(locals.user) { %>
-                <span class="pro-count blue" id="wishListCount"><%=locals.wishListCount%></span>
+                <span class="pro-count blue bg-dark" id="wishListCount"><%=locals.wishListCount%></span>
                 <%} %>
               </a>
             </div>
@@ -239,7 +239,7 @@
               <a class="mini-cart-icon" href="/cart">
                 <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg" />
                 <% if(locals.user) { %>
-                  <span class="pro-count blue" id="cartCount"><%=locals.count%></span>
+                  <span class="pro-count blue bg-dark" id="cartCount"><%=locals.count%></span>
                  <%} %>
               </a>
               <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2">

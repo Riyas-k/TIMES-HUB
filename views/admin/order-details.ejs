@@ -134,55 +134,60 @@
       </div>
     </div>
   </div>
-  <div class="table-responsive">
-    <table class="table align-middle mb-0 bg-white" id="productsTable">
-      <thead class="bg-light text-center">
-        <tr>
-          <th>No</th>
-          <th>Image</th>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Quantity</th>
-          <th>Status</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% products?.map((data,index)=>{ %>
-        <tr>
-          <td><%=index+1%></td>
-          <td>
-            <div class="d-flex align-items-center">
-              <a href="/admin/fullImage/<%=data._id%>">
-              <img
-                src="/images/<%=data.image[0]%>"
-                alt=""
-                class="rounded-circle"
-                style="width: 45px; height: 45px"
-              /></a>
-            </div>
-          </td>
-          <td>
-            <div class="ms-3 ml-5">
-              <p class="fw-bold mb-1"><%=data.productName%></p>
-            </div>
-          </td>
-          <td>
-            <p class="fw-normal mb-1"><%=data.category%></p>
-          </td>
-          <td><%=data.quantity%></td>
-          <td>
-            <span class="badge badge-success rounded-pill d-inline"
-              ><%=orderDetails.orderStatus%></span
-            >
-          </td>
-          <td>
-            <span>₹<%=data.price%></span>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
+</section>
+<section class="main-wrap">
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table mb-0 bg-white" id="productsTable">
+        <thead class="bg-light text-center">
+          <tr>
+            <th class="d-none d-sm-table-cell">No</th>
+            <th >Image</th>
+            <th>Product Name</th>
+            <th class="d-none d-sm-table-cell">Category</th>
+            <th >Quantity</th>
+            <th>Status</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products?.map((data,index)=>{ %>
+          <tr>
+            <td class="d-none d-sm-table-cell"><%=index+1%></td>
+            <td class="">
+              <div class="d-flex align-items-center">
+                <a href="/admin/fullImage/<%=data._id%>">
+                  <img
+                    src="/images/<%=data.image[0]%>"
+                    alt=""
+                    class="rounded-circle"
+                    style="width: 45px; height: 45px"
+                  />
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="ms-3 ml-sm-5">
+                <p class="fw-bold mb-1"><%=data.productName%></p>
+              </div>
+            </td>
+            <td class="d-none d-sm-table-cell">
+              <p class="fw-normal mb-1"><%=data.category%></p>
+            </td>
+            <td class=""><%=data.quantity%></td>
+            <td>
+              <span class="badge badge-success rounded-pill d-inline"
+                ><%=orderDetails.orderStatus%></span
+              >
+            </td>
+            <td>
+              <span>₹<%=data.price%></span>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
