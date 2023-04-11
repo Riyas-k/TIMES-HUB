@@ -352,28 +352,49 @@ module.exports = {
             );
           });
           let shipping = Details.map((detail) => detail.orders);
-          let productDetails = shipping.map((data) => data.productDetails);
-          let Details1 = productDetails.map((datas) => datas[0]);
-          //   console.log(Details,';;');
+          // let productDetails = shipping.map((data) => data.productDetails);
+          // let Details1 = productDetails.map((datas) => datas[0]);
+            console.log(Details,';;');
           res.render("admin/sales", {
             layout: "adminLayout",
             admins,
             total,
             Details,
             shipping,
-            Details1,
-          }).productDetails;
+          
+          });
         });
       });
     } catch (error) {
+      console.log(error);
       res.status(500);
     }
   },
-  postSales: (req, res) => {
+  postSales: async(req, res) => {
     try {
       //need
-      orderHelpers.postSales(req.body);
+      let admins = req.session.admin
+      let total =  await orderHelpers.findTotal()
+    
+      orderHelpers.postSales(req.body).then((Details)=>{
+      Details.map((Detail) => {
+        Detail.orders.createdAt = Detail.orders.createdAt.toLocaleString(
+          "en-US",
+          {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          }
+        );
+      });
+      let shipping = Details.map((detail) => detail.orders);
+      console.log(req.body,'===============');
+        res.render('admin/sort-sales',{layout:'adminLayout',admins,total,Details,shipping})
+      })
     } catch (error) {
+      console.log(error);
       res.status(500);
     }
   },

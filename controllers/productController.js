@@ -279,7 +279,7 @@ module.exports = {
     try {
       let user = req.session.user;
       let count = await cartHelpers.getCount(req.session.user.id);
-      console.log(req.body.selectedValue, "//");
+      // console.log(req.body.selectedValue, "//");
       let category = await productHelpers.getCategory();
       let wishListCount = await userHelpers.wishListLength(req.session.user.id);
       productHelpers.sortProducts(req.body.selectedValue).then((data) => {

@@ -575,6 +575,7 @@ module.exports = {
             },
           ])
           .then((response) => {
+            console.log(response,'sales===-');
             resolve(response);
           });
       });
@@ -704,6 +705,34 @@ getOrderTotal:(orderId)=>{
         // console.log(response.orders[0].total,'kkk');
         resolve(response?.orders[0].total)
       })
+      
+    } catch (error) {
+      console.log(error);
+    }
+  })
+},
+postSales:(bodyData)=>{
+  return new Promise(async(resolve,reject)=>{
+    try {
+      let result = await db.order.aggregate([
+        {
+          $unwind:'$orders'
+        },
+        {
+          $match:{
+            'orders.orderStatus':{
+              $in:['Delivered']
+            },
+            'orders.createdAt':{
+              $gte:new Date(bodyData.startdate),
+              $lte:new Date(bodyData.enddate)
+            }
+
+          }
+        }
+      ])
+      resolve(result)
+      console.log(result,'llllllll');
       
     } catch (error) {
       console.log(error);

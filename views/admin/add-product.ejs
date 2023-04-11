@@ -9,7 +9,7 @@
           method="post"
           enctype="multipart/form-data"
         >
-          <label for="">Prodcut Name</label>
+          <label for="">Product Name</label>
           <input
             type="text"
             id="name"
@@ -64,7 +64,7 @@
             id="file"
             alt=""
             class="p-2"
-            style="height: 80px; width: 80px"
+            style="height: 80px; width: 80px; display: none;"
           />
 
           <input
@@ -73,7 +73,7 @@
             multiple
             onchange="viewImage(event)"
             class="form-control"
-            required
+        
           />
           <button type="submit" class="btn btn-success mt-4" onclick="Swal.fire({
             position: 'center',
@@ -90,57 +90,9 @@
 
 <script>
   function viewImage(event) {
+    document.getElementById("file").style.display = "inline";
     document.getElementById("file").src = URL.createObjectURL(
       event.target.files[0]
     );
   }
 </script>
-
-<script>
-  jQuery.validator.addMethod(
-    "alphanumeric",
-    function (value, element) {
-      return this.optional(element) || /^[a-zA-Z0-9\s]+$/.test(value);
-    },
-    "Only letters, numbers, and spaces are allowed."
-  );
-
-  $(document).ready(function () {
-    console.log("ready");
-    $("#product-form").validate({
-      rules: {
-        name: {
-          required: true,
-          alphanumeric: true,
-        },
-      },
-      messages: {
-        name: {
-          required: "Please enter a product name.",
-          alphanumeric: "Only letters, numbers, and spaces are allowed.",
-        },
-      },
-      errorElement: "span",
-      errorClass: "error-message",
-      highlight: function (element) {
-        $(element).addClass("is-invalid");
-      },
-      unhighlight: function (element) {
-        $(element).removeClass("is-invalid");
-      },
-    });
-  });
-
-  // Move the CSS code inside the $(document).ready() function
-</script>
-
-<style>
-  .error-message {
-    color: red;
-    font-size: 12px;
-  }
-
-  .is-invalid {
-    border-color: red;
-  }
-</style>

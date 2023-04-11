@@ -96,7 +96,7 @@ router.post('/change-order-status/:id',auth.admin,orderController.changeOrderSta
 router.get('/sales-report',auth.admin,orderController.getSales);
 
 // post sales-report
-// router.post('/sales-report',auth.admin,orderController.postSales);
+router.post('/sales-report',auth.admin,orderController.postSales);
 
 //add-coupons
 router.get('/add-coupons',auth.admin,adminControllers.getAddCoupons);

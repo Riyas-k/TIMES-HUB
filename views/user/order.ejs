@@ -2,8 +2,8 @@
  <section class="mt-50 mb-50">
   <div class="container">
     <% if(Address==0 || Address!=0){ %>
-    <a href="/add-address" style="margin-bottom: 20px;" class="btn btn-primary">
-      <h5>+ Add an address</h5>
+    <a href="/add-address" style="margin-bottom: 20px;" class="btn btn-primary bg-dark">
+      <h5 class="text-light">+ Add an address</h5>
     </a>
     <% }%>
     <% if(Address.length!=0){ %>
@@ -79,7 +79,7 @@
               <input type="text" name="user" id="" value="<%=user.id%>" hidden>
             </div>
           </div>
-          <button type="submit" class="btn btn-fill-out btn-block mt-30">
+          <button type="submit" class="btn btn-fill-out btn-block mt-30 bg-dark">
             Check Out
           </button>
         </form>
