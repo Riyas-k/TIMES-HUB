@@ -189,6 +189,7 @@
           <img src="https://images.cooltext.com/5651103.png" class="ml-30 mt-5" alt="">
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <% if (locals.user) { %>
+                <a href="/profile" class="dropdown-item text-dark">Edit Profile</a>
              <a class="dropdown-item text-dark" href="/logout"> log out</a></li>
               <%} else { %>
             <li><a class="dropdown-item text-dark" href="/login"> log in</a></li>
@@ -242,57 +243,7 @@
                   <span class="pro-count blue bg-dark" id="cartCount"><%=locals.count%></span>
                  <%} %>
               </a>
-              <!-- <div class="cart-dropdown-wrap cart-dropdown-hm2">
-                <ul>
-                  <li>
-                    <div class="shopping-cart-img">
-                      <a href="shop-product-right.html"
-                        ><img
-                          alt="Evara"
-                          src="assets/imgs/shop/thumbnail-3.jpg"
-                      /></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                      <h4>
-                        <a href="shop-product-right.html"
-                          >Plain Striola Shirts</a
-                        >
-                      </h4>
-                      <h3><span>1 × </span>$800.00</h3>
-                    </div>
-                    <div class="shopping-cart-delete">
-                      <a href="#"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="shopping-cart-img">
-                      <a href="shop-product-right.html"
-                        ><img
-                          alt="Evara"
-                          src="assets/imgs/shop/thumbnail-4.jpg"
-                      /></a>
-                    </div>
-                    <div class="shopping-cart-title">
-                      <h4>
-                        <a href="shop-product-right.html">Macbook Pro 2022</a>
-                      </h4>
-                      <h3><span>1 × </span>$3500.00</h3>
-                    </div>
-                    <div class="shopping-cart-delete">
-                      <a href="#"><i class="fi-rs-cross-small"></i></a>
-                    </div>
-                  </li>
-                </ul>
-                <div class="shopping-cart-footer">
-                  <div class="shopping-cart-total">
-                    <h4>Total <span>$383.00</span></h4>
-                  </div>
-                  <div class="shopping-cart-button">
-                    <a href="shop-cart.html">View cart</a>
-                    <a href="shop-checkout.html">Checkout</a>
-                  </div>
-                </div>
-              </div> -->
+            
             </div>
             <div class="header-action-icon-2 d-block d-lg-none">
               <div class="burger-icon burger-icon-white">
@@ -311,7 +262,7 @@
   <div class="mobile-header-wrapper-inner">
     <div class="mobile-header-top">
       <div class="mobile-header-logo">
-        <img src="https://images.cooltext.com/5651101.png" width="200px" height="30px" alt="">
+        <img src="https://images.cooltext.com/5651101.png" width="100px" height="20px" alt="">
       </div>
       <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
         <button class="close-style search-close">
@@ -339,14 +290,9 @@
               <span class="menu-expand"></span><a href="/shop">Shop</a>
             </li>
             <li class="menu-item-has-children">
-              <span class="menu-expand"></span><a href="#">Orders</a>
+              <span class="menu-expand"></span><a href="/orders">Orders</a>
             </li>
-            <li class="menu-item-has-children">
-              <span class="menu-expand"></span><a href="blog-category-fullwidth.html">About</a>
-            </li>
-            <li class="menu-item-has-children">
-              <span class="menu-expand"></span><a href="blog-category-fullwidth.html">Contact</a>
-            </li>
+          
 
             <!-- <li class="menu-item-has-children">
                 <span class="menu-expand"></span><a href="#">Language</a>
@@ -361,6 +307,7 @@
         </nav>
         <!-- mobile menu end -->
       </div>
+    
    
     </div>
 
