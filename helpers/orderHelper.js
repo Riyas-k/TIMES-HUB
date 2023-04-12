@@ -272,7 +272,7 @@ module.exports = {
             if(address){
               resolve(address)
             }else{
-              resolve(0)
+              reject()
             }
           });
       });
