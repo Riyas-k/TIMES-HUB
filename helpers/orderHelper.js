@@ -6,7 +6,6 @@ var crypto = require("crypto");
 const Razorpay = require("razorpay");
 const razorPayDetails = require("../otp/razorpay");
 const { resolve } = require("path");
-const easyinvoice = require("easyinvoice");
 const { rejects } = require("assert");
 
 var instance = new Razorpay({

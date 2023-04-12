@@ -8,7 +8,6 @@ const session = require('express-session');
 const nocache = require('nocache');
 const bodyParser = require('body-parser');
 var MongoDBStore = require('connect-mongodb-session')(session);
-const easyinvoice = require('easyinvoice');
 
 const app = express();
 
