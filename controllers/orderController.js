@@ -51,7 +51,7 @@ module.exports = {
         res.redirect("/shop");
       }
     } catch (error) {
-      res.status(500);
+      // res.status(500);
     }
   },
   postPlaceOrder: async (req, res) => {
@@ -82,7 +82,7 @@ module.exports = {
           }
         });
     } catch (error) {
-      res.status(500);
+      // res.status(500);
     }
   },
   getSuccess: async (req, res) => {
