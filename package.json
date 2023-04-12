@@ -27,7 +27,7 @@
     "nocache": "^3.0.4",
     "nodemailer": "^6.9.1",
     "paypal-rest-sdk": "^1.8.1",
-    "razorpay": "^0.0.0",
+    "razorpay": "^2.8.6",
     "slugify": "^1.6.5",
     "sweetalert2": "^11.4.8",
     "twilio": "^4.8.0",
