@@ -266,14 +266,12 @@ module.exports = {
   getAddress: (userId) => {
     try {
       return new Promise(async (resolve, reject) => {
-        let address = await db.address
+        await db.address
           .findOne({ user: userId })
           .then((address) => {
-            if(address){
+           console.log(address,'adress===');
               resolve(address)
-            }else{
-              reject()
-            }
+            
           });
       });
     } catch (error) {

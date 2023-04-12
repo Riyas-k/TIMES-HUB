@@ -1,12 +1,12 @@
 
  <section class="mt-50 mb-50">
-  <div class="container">
-    <% if(Address==0 || Address!=0){ %>
+   <div class="container">
+   <% if(Address==null){ %>
     <a href="/add-address" style="margin-bottom: 20px;" class="btn btn-primary bg-dark">
       <h5 class="text-light">+ Add an address</h5>
     </a>
     <% }%>
-    <% if(Address.length!=0){ %>
+    <% if(Address!=null){ %>
     <div class="row">
       <div class="col-md-6">
         <div class="mb-25">

@@ -51,6 +51,7 @@ module.exports = {
         res.redirect("/shop");
       }
     } catch (error) {
+      console.log(error);
       // res.status(500);
     }
   },
