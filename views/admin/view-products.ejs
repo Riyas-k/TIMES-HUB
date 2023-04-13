@@ -1,10 +1,10 @@
 <section class="main-wrap mt-5">
-  <div class="container">
+  <div class="container-fluid">
     <a href="/admin/add-product">
       <button class="btn btn-primary mb-2 bg-dark">Add Products</button>
     </a>
-    <div class="row">
-      <div class="table-responsive">
+    <div class="row flex-column">
+      <div class="table-responsive-sm">
         <table class="table" id="productsTable">
           <thead>
             <tr>
@@ -13,7 +13,7 @@
               <th scope="col">Image</th>
               <th scope="col">Price</th>
               <th class="d-none d-sm-table-cell" scope="col">OfferPrice</th>
-              <th scope="col">Category</th>
+              <th class="d-none d-sm-table-cell">Category</th>
               <th scope="col">Quantity</th>
               <th scope="col">Option</th>
             </tr>
@@ -26,7 +26,7 @@
                 <td><a href="/admin/fullImage/<%=data._id%>" ><img src="/images/<%=data.Image[0]%>" style=" height:50px; width: 60px;" alt=""></a></td>
                 <td><%=data.Price%></td>
                 <td class="d-none d-sm-table-cell"><%=data.OfferPrice%></td>
-                <td><%=data.Category%></td>
+                <td class="d-none d-sm-table-cell"><%=data.Category%></td>
                 <% if(data.Quantity===0){ %>
                     <td class="text-danger">out of stock</td>
                 <% }else{ %>
