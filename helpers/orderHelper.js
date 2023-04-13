@@ -395,7 +395,7 @@ module.exports = {
       return new Promise(async (resolve, reject) => {
         // console.log(orderId);
         let result = await db.order.findOneAndUpdate(
-          { "orders._id": orderId },
+          { "orders._id": ObjectId(orderId) },
           { $set: { "orders.$.orderStatus": status } }
         );
         resolve(result);

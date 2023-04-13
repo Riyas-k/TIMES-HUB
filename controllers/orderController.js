@@ -282,11 +282,11 @@ module.exports = {
   changeOrderStatus: (req, res) => {
     try {
       orderHelpers
-        .changeOrderStatus(req.body.status, req.params.id,req.session.user.id)
+        .changeOrderStatus(req.body.status, req.params.id)
         .then((response) => {
           console.log(response,'resp');
           const orders = [];
-          for (let i = 0; i <response?.orders.length; i++) {
+          for (let i = 0; i <response.orders.length; i++) {
             if (response.orders[i].orderStatus === "Return Confirmed") {
               orders.push(response.orders[i].orderStatus);
             }

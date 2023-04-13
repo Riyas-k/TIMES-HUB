@@ -200,6 +200,7 @@
             data:$('#changeOrderStatus').serialize(),
             success:(response)=>{
                 if(response.status){
+                  console.log(response.status);
                     location.reload()
                 }
             }
@@ -222,7 +223,7 @@
       },
     });
   }); -->
-</script>
+<!-- </script> -->
 
 <style>
   .main-wrap {
