@@ -128,13 +128,14 @@ module.exports = {
     }
   },
   getOrders: (userId) => {
+    console.log(userId,'kkkk');
     try {
       return new Promise(async (resolve, reject) => {
         let orders = await db.order
           .aggregate([
             {
               $match: {
-                user: userId,
+                user: ObjectId(userId),
               },
             },
             {
@@ -148,8 +149,8 @@ module.exports = {
           ])
           .then((orders) => {
             resolve(orders);
+            console.log(orders,'=======');
           });
-        // console.log(orders,'=======');
       });
     } catch (error) {
       console.log(error);

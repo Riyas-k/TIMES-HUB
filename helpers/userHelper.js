@@ -309,7 +309,7 @@ module.exports = {
         await db.wishList
           .aggregate([
             {
-              $match: { user: userId },
+              $match: { user: ObjectId( userId) },
             },
             {
               $unwind: "$wishList",
@@ -334,7 +334,7 @@ module.exports = {
             },
           ])
           .then((response) => {
-            // console.log(response,'=====================');
+            console.log(response,'=====================');
             resolve(response);
           });
       });

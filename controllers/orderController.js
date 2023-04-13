@@ -115,7 +115,7 @@ module.exports = {
         );
       });
       let wishListCount = await userHelpers.wishListLength(req.session.user.id);
-
+       console.log(orders.length,'===');
       res.render("user/view-orders", { count, user, orders, wishListCount });
     } catch (error) {
       res.status(500);

@@ -27,6 +27,7 @@ module.exports = {
             req.session.user.id
           );
           let count = await cartHelpers.getCount(req.session.user.id);
+          console.log('lllll');
           res.render("user/wishlist", {
             wishlistItems,
             user,
