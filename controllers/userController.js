@@ -8,8 +8,13 @@ const otp = require("../otp/otp");
 const cartHelpers = require("../helpers/cartHelpers");
 const nodemailer = require("nodemailer");
 const wishListController = require("./wishListController");
+
+// let accountSID = process.env(Twilio.accountSID)
+// let authToken
+
 let client = require("twilio")(otp.accountSID, otp.authToken);
 let mailer = require("../otp/mailer");
+const { Twilio } = require("twilio");
 
 module.exports = {
   home: async (req, res) => {
