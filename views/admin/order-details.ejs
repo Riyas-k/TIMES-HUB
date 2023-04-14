@@ -57,7 +57,7 @@
               </select>
 
               <button
-                type="submit" onclick="changeOrderStatus('<%=orderDetails._id%>');Swal.fire({
+                type="submit" onclick="changeOrderStatus('<%=orderDetails._id%>','<%=address[0].shippingAddress.user%>');Swal.fire({
                   position: 'center',
                   icon: 'success',
                   title: 'Order Status Changed to <%=orderDetails.orderStatus%>',
@@ -194,12 +194,14 @@
 </section>
 
 <script>
-    function changeOrderStatus(orderId){
+    function changeOrderStatus(orderId,userId){
         event.preventDefault();
+        let data=$('#changeOrderStatus').serialize();
+            data += '&userId=' + userId;
         $.ajax({
             url:'/admin/change-order-status/'+orderId,
             method:'post',
-            data:$('#changeOrderStatus').serialize(),
+            data:data,
             success:(response)=>{
                 if(response.status){
                   console.log(response.status);

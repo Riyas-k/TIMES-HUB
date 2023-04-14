@@ -356,7 +356,7 @@ module.exports = {
          let response =  await db.order.aggregate([
             {
               $match:{
-                user:userId
+                user:ObjectId(userId)
               }
             },
             {
@@ -379,10 +379,10 @@ module.exports = {
               }
             }
           ])
-
+          console.log(response[0]?.total,'total');
           let data = response[0]?.total
    
-            await db.users.updateOne({_id:userId},{$set:{Wallet:data}})
+            await db.users.updateOne({_id:ObjectId(userId)},{$set:{Wallet:data}})
           resolve(data)
           
         })

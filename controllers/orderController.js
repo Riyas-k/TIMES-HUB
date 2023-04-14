@@ -264,7 +264,7 @@ module.exports = {
           let address = response.address1;
           let orderDetails = response.details;
           let admins = req.session.admin;
-          //   console.log(orders);
+            console.log(address[0].shippingAddress.user,'kkk');
           res.render("admin/order-details", {
             layout: "adminLayout",
             admins,
@@ -280,19 +280,21 @@ module.exports = {
     }
   },
   changeOrderStatus: (req, res) => {
+    console.log(req.body,'body data');
     try {
       orderHelpers
         .changeOrderStatus(req.body.status, req.params.id)
         .then((response) => {
-          console.log(response,'resp');
           const orders = [];
           for (let i = 0; i <response.orders.length; i++) {
             if (response.orders[i].orderStatus === "Return Confirmed") {
               orders.push(response.orders[i].orderStatus);
             }
           }
+          console.log(orders,'resp');
         if(orders){
-           orderHelpers.getWallet(req.session.user.id)
+          console.log('there is orders');
+           orderHelpers.getWallet(req.body.userId)
         }
 
           res.json({ status: true });
