@@ -6,31 +6,31 @@
     </div>
     <%}else{%>
     <h1 class="text-dark text-center pt-5 ">Sales Report</h1>
-    <td><img src="https://images.cooltext.com/5651101.png" alt=""></td>
-    <div class="d-flex justify-content-center m-4">
-      <button type="button" class="btn btn-danger btn_print me-3" onclick="Swal.fire({
+    <img  src="https://images.cooltext.com/5651101.png" alt="">
+    <div class="d-flex justify-content-center flex-wrap mt-4">
+      <button type="button" class="btn btn-danger btn_print mx-3 mb-3" onclick="Swal.fire({
               position: 'center',
               icon: 'success',
               title: 'Download PDF Successfully',
               showConfirmButton: false,
               timer: 1500
             })" value="Download as Pdf">Download PDF</button>
-      <button type="button" class="btn btn-danger btn_print me-3" onclick="Swal.fire({
+      <button type="button" class="btn btn-danger btn_print mx-3 mb-3" onclick="Swal.fire({
               position: 'center',
               icon: 'success',
               title: 'Download Excel Successfully',
               showConfirmButton: false,
               timer: 1500
             })" value="Export to excel">Download as Excel</button>
-      <form action="/admin/sales-report" method="POST" class="d-flex align-items-center">
-        <div class="mx-3">
+      <form action="/admin/sales-report" method="POST" class="d-flex align-items-center mb-2 flex-wrap">
+        <div class="mx-3 flex-wrap mt-4">
           <input type="date" name="startdate" id="startdate" class="form-control">
         </div>
-        <div class="mx-3">
+        <div class="mx-3 flex-wrap mt-4">
           <input type="date" name="enddate" id="enddate" class="form-control">
         </div>
-        <div class="mx-3">
-          <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="mx-3 flex-wrap mt-4">
+          <button class="btn btn-primary " type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -69,6 +69,8 @@
     <%}%>
   </div>
 </section>
+
+
 
 <script>
     $(document).ready(function ($) {
