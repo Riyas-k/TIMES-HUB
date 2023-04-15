@@ -1,86 +1,80 @@
-<section class="main-wrap">
-    <div class="col-12 grid-margin">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title pb-3 text-center">Add new coupon</h2>
-            <form class="form-sample">
-
-              <div class="alert alert-danger " id="errorDisplay" role="alert" hidden>
-      
+<section class="main-wrap d-flex align-items-center justify-content-center">
+  <div class="col-12 grid-margin">
+    <div class="card text-center mx-auto">
+      <div class="card-body">
+        <h2 class="card-title pb-3">Add new coupon</h2>
+        <form class="form-sample">
+          <div class="alert alert-danger" id="errorDisplay" role="alert" hidden></div>
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Coupon Code</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <input type="text" id="couponName" value="" class="form-control" placeholder="Generate Coupon Code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <a class="btn btn-outline-info" onclick="generateCoupon()">Generate Code</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Coupon Code</label>
-                    <div class="col-sm-9">
-                      <div class="input-group ">
-                        <input type="text" id="couponName" value="" class="form-control" placeholder="Generate Coupon Code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <a class="btn btn-outline-info" onclick="generateCoupon()">Generate Code</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            </div>
+      
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Validity</label>
+                <div class="col-sm-9">
+                  <input type="date" name="" class="form-control" id="validity">
                 </div>
-      
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Validity</label>
-                    <div class="col-sm-9">
-                      <input type="date" name="" class="form-control" id="validity" cols="45" rows="5"></input>
-                    </div>
-                  </div>
-                </div>
-      
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Min Purchase</label>
-                    <div class="col-sm-9">
-                      <input id="minAmount" type="text" class="form-control" onkeyup="validateMinAmount"/>
-                    </div>
-                  </div>
-                </div>
-      
-      
-                <div class="col-md-6 discPer ">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Discount (%)</label>
-                    <div class="col-sm-9">
-                      <input id="discountPercentage" type="number" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-      
-                <div class="col-md-6" id="maxdiscountfield">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Max Discount  (Rs)</label>
-                    <div class="col-sm-9">
-                      <input id="maxDiscountValue" type="text" class="form-control" />
-                    </div>
-                  </div>
-                </div>
-      
-      
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Description  (T&C)</label>
-                    <div class="col-sm-9">
-                      <textarea name="" class="form-control" id="description" cols="45" rows="5"></textarea>
-                    </div>
-                  </div>
-                </div>
-      
-                <a type="button" class="btn btn-danger" onclick="validatorCoupen();Swal.fire({
-                  position: 'center',
-                  icon: 'success',
-                  title: 'Coupon Added Successfully',
-                  showConfirmButton: false,
-                  timer: 1500
-                })">submit</a>
-      
               </div>
-          </div>
-          </form>
+            </div>
+      
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Min Purchase</label>
+                <div class="col-sm-9">
+                  <input id="minAmount" type="text" class="form-control" onkeyup="validateMinAmount">
+                </div>
+              </div>
+            </div>
+      
+            <div class="col-md-6 discPer">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Discount (%)</label>
+                <div class="col-sm-9">
+                  <input id="discountPercentage" type="number" class="form-control">
+                </div>
+              </div>
+            </div>
+      
+            <div class="col-md-6" id="maxdiscountfield">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Max Discount (Rs)</label>
+                <div class="col-sm-9">
+                  <input id="maxDiscountValue" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+      
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Description (T&amp;C)</label>
+                <div class="col-sm-9">
+                  <textarea name="" class="form-control" id="description" cols="45" rows="5"></textarea>
+                </div>
+              </div>
+            </div>
+      
+            <div class="col-md-12">
+              <a type="button" class="btn btn-danger" onclick="validatorCoupen();Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Coupon Added Successfully',
+                showConfirmButton: false,
+                timer: 1500
+              })">submit</a>
+            </div>
+        </form>
         </div>
       </div>
       </div>
