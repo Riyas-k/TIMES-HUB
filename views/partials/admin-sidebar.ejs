@@ -115,6 +115,25 @@
   </nav>
 </aside>
 
+<style>
+  .hidden {
+  display: none;
+}
+
+</style>
+
+<script>
+const minimizeButton = document.querySelector('.btn-aside-minimize');
+const spanTexts = document.querySelectorAll('.text');
+
+minimizeButton.addEventListener('click', () => {
+  spanTexts.forEach(span => {
+    span.classList.toggle('hidden');
+  });
+});
+
+
+</script>
 
 
 
